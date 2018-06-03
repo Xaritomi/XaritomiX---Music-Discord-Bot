@@ -1,0 +1,12 @@
+{
+    "BOT_Token": "Put your bot token here",
+    "Default_Prefix": "!",
+    "YTAPI": "Put API here",
+    "OwnerID": "Please put your discord username ID here (Developer mode must be enabled)",
+    "ModLog": "mod-log",
+    "BotCommandChannel": "Bot",
+    "AdminRole": "Administrators",
+    "ModRole": "Moderators",
+    "MemberRole": "Members",
+    "DefaultMusicVolume": "20"
+}

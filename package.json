@@ -1,0 +1,22 @@
+{
+  "name": "xaritomix",
+  "version": "1.0.0",
+  "description": "A simple but featureful music discord bot",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Xaritomi/XaritomiX.git"
+  },
+  "author": "Xaritomi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Xaritomi/XaritomiX/issues"
+  },
+  "homepage": "https://github.com/Xaritomi/XaritomiX#readme",
+  "dependencies": {
+    "discord.js": "^11.3.2"
+  }
+}
