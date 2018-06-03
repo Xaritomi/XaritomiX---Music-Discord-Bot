@@ -1,6 +1,5 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
-const embedCheck = require("../functions/embedPerms.js");
 
 exports.run = async (client, message, args) => {
   if (!client.playlists.has(message.guild.id)) return message.channel.send("There is nothing in the queue");

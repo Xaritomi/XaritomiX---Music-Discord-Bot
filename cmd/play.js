@@ -1,8 +1,8 @@
 const Discord = require("discord.js");
-const config = require("../config.json");
+const config = require("../settings.json");
 const ytdl = require("ytdl-core");
 const ytapi = require("simple-youtube-api");
-const youtube = new ytapi(config.youtubeAPIKEY);
+const youtube = new ytapi(config.YTAPI);
 
 
 exports.run = async (client, message, args) => {

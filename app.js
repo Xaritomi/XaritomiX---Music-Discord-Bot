@@ -20,13 +20,14 @@ client.lockdown = new Discord.Collection();
 client.maintenance = new Discord.Collection();
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
+client.serverSettings = new Enmap({provider: new EnmapLevel({name: "settings"})});
 
 fs.readdir("./cmd/", (err, files) => {
     if (err) console.error(err);
-    log(`Loading a total of ${files.length} commands.`);
-    files.forEach(files => {
-      let props = require(`./cmd/${files}`);
-      log(`Loading Command: ${props.help.name}. All Good`);
+    console.log(`Loading a total of ${files.length} commands.`);
+    files.forEach(f => {
+      let props = require(`./cmd/${f}`);
+      console.log(`Loading Command: ${props.help.name}. All Good`);
       client.commands.set(props.help.name, props);
       props.conf.aliases.forEach(alias => {
         client.aliases.set(alias, props.help.name);
@@ -34,10 +35,17 @@ fs.readdir("./cmd/", (err, files) => {
   });
 });
 
+client.on("guildCreate", guild => {
+    client.serverSettings.set(guild.id, defaultSettings);
+    console.log(`Added ${guild.name} to memory`)
+});
+
 client.on("message", message => {
+    let guild = message.guild;
     if (message.guild === null) return;
+    if (!client.serverSettings.has(guild.id)) client.serverSettings.set(guild.id, defaultSettings);
     if (!message.content.startsWith(client.serverSettings.get(message.guild.id).prefix)) return;
-    if (client.maintenance.has(message.guild.id) && message.author.id !== config.ownerid) return message.channel.send("Sorry, but i'm currently under maintenance.");
+    if (client.maintenance.has(message.guild.id) && message.author.id !== settings.OwnerID) return message.channel.send("Sorry, but i'm currently under maintenance.");
     let command = message.content.split(" ")[0].slice(client.serverSettings.get(message.guild.id).prefix.length);
     let args = message.content.split(" ").slice(1);
     let perms = client.permissions(message);
@@ -54,8 +62,8 @@ client.on("message", message => {
 });
 
 client.on("ready", () => {
-    log(`Wow, i\'m alive`);
-    client.user.setGame(`${client/guilds.size}`);
+    console.log(`Wow, i\'m alive`);
+    client.user.setGame(`${client.guilds.size}`);
 });
 
 client.on("error", console.error);
@@ -71,7 +79,7 @@ client.permissions = function(message) {
     if(mod_role && message.member.roles.has(mod_role.id)) permlvl = 2;
     let admin_role = message.guild.roles.find("name", client.serverSettings.get(message.guild.id).AdminRole);
     if(admin_role && message.member.roles.has(admin_role.id)) permlvl = 3;
-    if(message.author.id === config.ownerid) permlvl = 4;
+    if(message.author.id === settings.ownerid) permlvl = 4;
     return permlvl;
 }
 
