@@ -21,7 +21,7 @@ client.lockdown = new Discord.Collection();
 client.maintenance = new Discord.Collection();
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
-client.serverSettings = new Enmap({provider: new EnmapLevel({name: "settings"})});
+client.serverSettings = new Enmap({provider: new EnmapLevel({name: "ServerSettings"})});
 
 fs.readdir("./cmd/", (err, files) => {
     if (err) console.error(err);
