@@ -12,7 +12,8 @@ const defaultSettings = {
     ModRole: settings.ModRole,
     MemberRole: settings.MemberRole,
     BotRoom: settings.BotCommandChannel,
-    DefaultMusicVolume: settings.DefaultMusicVolume
+    DefaultMusicVolume: settings.DefaultMusicVolume,
+    DisplayNextSong: true
 }
 
 client.playlists = new Map();
