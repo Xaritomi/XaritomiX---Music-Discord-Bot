@@ -4,7 +4,7 @@
     "YTAPI": "AIzaSyAt0mg5IKZ9dnoifvHSp5JW4vbTOTA9UL0",
     "OwnerID": "220908912272998413",
     "ModLog": "mod-log",
-    "BotCommandChannel": "Bot",
+    "BotCommandChannel": "botcommands",
     "AdminRole": "Administrators",
     "ModRole": "Moderators",
     "MemberRole": "Members",

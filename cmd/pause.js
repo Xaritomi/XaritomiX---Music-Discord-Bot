@@ -1,8 +1,6 @@
 exports.run = (client, message, args) => {
   const voiceChannel = message.member.voiceChannel ? message.member.voiceChannel : (message.guild.voiceConnection ? message.guild.voiceConnection.channel : null);
-  if (!voiceChannel) {
-    return message.reply("You must be in a voicechannel to use this command");
-  }
+  if (!voiceChannel) return message.reply("You must be in a voicechannel to use this command");
 
   if (client.playlists.get(message.guild.id).dispatcher.paused) return message.reply("Playback has already been paused");
   client.playlists.get(message.guild.id).paused = true;

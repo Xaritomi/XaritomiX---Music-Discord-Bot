@@ -6,7 +6,6 @@ exports.run = (client, message, args) => {
   }
 
   let vol = args.join(" ");
-  console.log(vol);
   if (!vol) return message.channel.sendMessage(`Current volume is: ${client.playlists.get(message.guild.id).volume}%`);
   if (vol < 0 || vol > 200) {
     return message.reply("Volume must be a value between 0% and 200%");

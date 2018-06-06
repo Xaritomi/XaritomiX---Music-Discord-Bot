@@ -12,11 +12,11 @@ exports.run = (client, message, args) => {
       "fields": [
         {
           "name": "Music Commands",
-          "value": "`Play` `Summon` `Skip` `Pause` `Repeat` `restartSong` `Stop` `Volume` `Shuffle`"
+          "value": "`play` `summon` `skip` `pause` `repeat` `restartSong` `stop` `volume` `shuffle`"
         },
         {
           "name": "Admin Commands",
-          "value": "`Restart` `settings` `clear` `help`"
+          "value": "`settings` `clear` `help`"
         }
       ]
     };

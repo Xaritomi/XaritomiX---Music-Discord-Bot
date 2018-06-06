@@ -61,7 +61,6 @@ exports.run = async (client, message, args) => {
 
 
         song = await searchVideos(serverInfo, videoIndex, message);
-        console.log(`Here are the songs: ${song.url}`);
     }
 
 
@@ -76,7 +75,7 @@ exports.run = async (client, message, args) => {
             voiceChannel: voiceChannel,
             connection: null,
             songs: [],
-            volume: client.serverSettings.get(message.guild.id).startingMusicVolume,
+            volume: client.serverSettings.get(message.guild.id).defaultmusicvolume,
             playing: true,
             paused: false,
             playlist: false
@@ -85,7 +84,6 @@ exports.run = async (client, message, args) => {
 
         if (!songRequest.includes("playlist")) {
             client.playlists.get(message.guild.id).songs.push(song);
-            console.log("pushed");
         }
 
         if (songRequest.includes("playlist")) {
@@ -122,8 +120,6 @@ exports.run = async (client, message, args) => {
 
 async function searchVideos(serverInfo, videoIndex, message) {
     const duration = await youtube.getVideoByID(serverInfo[videoIndex - 1].id);
-    console.log("11111111");
-    console.log(duration.duration);
 
     song = {
         songTitle: serverInfo[videoIndex - 1].title,
@@ -134,11 +130,7 @@ async function searchVideos(serverInfo, videoIndex, message) {
         minutes: duration.duration.minutes,
         seconds: duration.duration.seconds
     };
-    console.log("22222222");
-    console.log(song);
-
     return song;
-
 }
 
 
@@ -152,7 +144,7 @@ async function playlist(client, message, guild, songRequest) {
         client.playlists.delete(message.guild.id);
         return;
     }
-    message.channel.send(`Found and added \`${videos.length}\` songs from \`${playlist.title}\` **NOTE** This wont be instant, depending on the size of the playlist`);
+    message.channel.send(`Found and added \`${videos.length}\` songs from \`${playlist.title}\` **NOTE** This will take a moment`);
     for (var i = 0; i < videos.length; i++) {
         const duration = await youtube.getVideoByID(videos[i].id);
         client.playlists.get(message.guild.id).songs.push({
@@ -170,7 +162,6 @@ async function playlist(client, message, guild, songRequest) {
 
     if (client.playlists.get(message.guild.id).playlist === true) return;
     client.playlists.get(message.guild.id).playlist = true;
-    console.log(client.playlists.get(message.guild.id).songs[3])
     setTimeout(() => {
        play(client, message, guild, client.playlists.get(message.guild.id).songs[0]);
     }, 500);
@@ -182,7 +173,6 @@ function play(client, message, guild, song) {
     if (!song) {
         client.playlists.get(message.guild.id).voiceChannel.leave();
         client.playlists.delete(message.guild.id);
-        client.user.setGame(`/ For Zerene Network`);
         return message.channel.send("Queue Concluded");
     }
     client.playlists.get(message.guild.id).loading = false;
@@ -191,10 +181,9 @@ function play(client, message, guild, song) {
     client.playlists.get(message.guild.id).dispatcher = dispatcher;
     dispatcher.setVolume(client.playlists.get(message.guild.id).volume / 100);
     if (client.playlists.get(message.guild.id).playlist == false) client.playlists.get(message.guild.id).playlist = true;
-    client.user.setGame(`${song.songTitle}`);
 
-    if (client.playlists.get(message.guild.id).restart === true) message.channel.send(`Replaying **${song.songTitle} (${song.hours}:${song.minutes}:${song.seconds})** - Requested by **${song.requester}**`);
-    if (client.playlists.get(message.guild.id).restart === false) message.channel.send(`Now playing **${song.songTitle} (${song.hours}:${song.minutes}:${song.seconds})** - Requested by **${song.requester}**`);
+    if (client.playlists.get(message.guild.id).restart === true && client.serverSettings.get(message.guild.id).displaynextsong === true) message.channel.send(`Replaying **${song.songTitle} (${song.hours}:${song.minutes}:${song.seconds})** - Requested by **${song.requester}**`);
+    if (client.playlists.get(message.guild.id).restart === false && client.serverSettings.get(message.guild.id).displaynextsong === true) message.channel.send(`Now playing **${song.songTitle} (${song.hours}:${song.minutes}:${song.seconds})** - Requested by **${song.requester}**`);
 
     dispatcher.on("end", () => {
         if (client.playlists.get(message.guild.id).restart === true) {
