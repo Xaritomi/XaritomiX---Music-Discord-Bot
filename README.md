@@ -17,3 +17,16 @@ All the settings that can be changed can be located in the example.settings.json
     "ModRole": "Moderators",
     "MemberRole": "Members",
     "DefaultMusicVolume": "20"
+
+
+
+# How To Install
+
+Make sure you download the latest version of Node
+Clone the repo with git https://github.com/Xaritomi/XaritomiX---Music-Discord-Bot.git
+in command line, in the same directory as where the bot is, type npm install
+
+Now, fill in all the information in the example_settings.json - Rename to settings.json
+
+Now start the bot with node app.js
+
