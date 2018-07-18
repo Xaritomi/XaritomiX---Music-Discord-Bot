@@ -25,7 +25,7 @@ All the settings that can be changed can be located in the example.settings.json
 Make sure you download the latest version of Node
 
 
-Clone the repo with git https://github.com/Xaritomi/XaritomiX---Music-Discord-Bot.git
+Clone the repo with git clone https://github.com/Xaritomi/XaritomiX---Music-Discord-Bot.git
 
 
 in command line, in the same directory as where the bot is, type npm install
